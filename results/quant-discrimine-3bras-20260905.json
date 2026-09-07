@@ -1,0 +1,78 @@
+{
+ "positif": 0.0,
+ "negatif": 1.40650034832157,
+ "tenseurs": [
+  {
+   "nom": "model.language_model.layers.1.mlp.experts.0.down_proj",
+   "nvidia": 0.08544971924636341,
+   "inferact": 0.09869800266096633,
+   "maxabs_nu": 0.094826035848508
+  },
+  {
+   "nom": "model.language_model.layers.1.mlp.experts.0.gate_proj",
+   "nvidia": 0.08549361393664844,
+   "inferact": 0.09778480920127898,
+   "maxabs_nu": 0.09383879013532888
+  },
+  {
+   "nom": "model.language_model.layers.1.mlp.experts.7.down_proj",
+   "nvidia": 0.08545178388561646,
+   "inferact": 0.09860333178826393,
+   "maxabs_nu": 0.09476551136724748
+  },
+  {
+   "nom": "model.language_model.layers.1.mlp.experts.7.gate_proj",
+   "nvidia": 0.08549348497445997,
+   "inferact": 0.09822576224905658,
+   "maxabs_nu": 0.09433789733442305
+  },
+  {
+   "nom": "model.language_model.layers.24.mlp.experts.0.down_proj",
+   "nvidia": 0.08550570400833789,
+   "inferact": 0.09874332411069806,
+   "maxabs_nu": 0.09479457624317432
+  },
+  {
+   "nom": "model.language_model.layers.24.mlp.experts.0.gate_proj",
+   "nvidia": 0.08552549251370693,
+   "inferact": 0.0987752666518084,
+   "maxabs_nu": 0.09509522050351109
+  },
+  {
+   "nom": "model.language_model.layers.24.mlp.experts.7.down_proj",
+   "nvidia": 0.08548258998823517,
+   "inferact": 0.09873321567369116,
+   "maxabs_nu": 0.09477719666863312
+  },
+  {
+   "nom": "model.language_model.layers.24.mlp.experts.7.gate_proj",
+   "nvidia": 0.08550303756580492,
+   "inferact": 0.09861396198329113,
+   "maxabs_nu": 0.09460565021245122
+  },
+  {
+   "nom": "model.language_model.layers.47.mlp.experts.0.down_proj",
+   "nvidia": 0.08561472363085962,
+   "inferact": 0.09845905438047735,
+   "maxabs_nu": 0.09449130314904058
+  },
+  {
+   "nom": "model.language_model.layers.47.mlp.experts.0.gate_proj",
+   "nvidia": 0.08599588260669523,
+   "inferact": 0.09780381124235189,
+   "maxabs_nu": 0.09399235182207051
+  },
+  {
+   "nom": "model.language_model.layers.47.mlp.experts.7.down_proj",
+   "nvidia": 0.08544933827989089,
+   "inferact": 0.09840869940793263,
+   "maxabs_nu": 0.09466912609786139
+  },
+  {
+   "nom": "model.language_model.layers.47.mlp.experts.7.gate_proj",
+   "nvidia": 0.08563011824631617,
+   "inferact": 0.09839165196503613,
+   "maxabs_nu": 0.09451871575013257
+  }
+ ]
+}

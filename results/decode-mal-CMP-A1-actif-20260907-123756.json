@@ -1,0 +1,38 @@
+{
+ "bras": "CMP-A1-actif",
+ "date": "2026-09-07T12:37:56",
+ "tirs_par_contenu": 4,
+ "max_tokens": 700,
+ "par_contenu": {
+  "prose": {
+   "debit_mediane": 44.9648680598744,
+   "debit_min": 44.12648199744323,
+   "debit_max": 46.063318996083204,
+   "sortie_mediane": 700.0
+  },
+  "code": {
+   "debit_mediane": 54.19769918683782,
+   "debit_min": 54.05734310200746,
+   "debit_max": 55.25809019801225,
+   "sortie_mediane": 700.0
+  },
+  "structure": {
+   "debit_mediane": 49.92825848013785,
+   "debit_min": 49.14146666921746,
+   "debit_max": 52.361358570161634,
+   "sortie_mediane": 700.0
+  },
+  "repetitif": {
+   "debit_mediane": 66.83808276040364,
+   "debit_min": 65.21131461128206,
+   "debit_max": 68.09341383009705,
+   "sortie_mediane": 700.0
+  }
+ },
+ "debit_mediane_globale": 52.06297883348783,
+ "mal": 3.0053636558678396,
+ "taux_acceptation_pct": 66.84545519559465,
+ "brouillons": 4661.0,
+ "proposes": 13983.0,
+ "acceptes": 9347.0
+}

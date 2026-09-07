@@ -1,0 +1,38 @@
+{
+ "bras": "CMP-B-zero",
+ "date": "2026-09-07T12:42:26",
+ "tirs_par_contenu": 4,
+ "max_tokens": 700,
+ "par_contenu": {
+  "prose": {
+   "debit_mediane": 45.37928484153802,
+   "debit_min": 44.020822177929375,
+   "debit_max": 46.63567927779311,
+   "sortie_mediane": 700.0
+  },
+  "code": {
+   "debit_mediane": 54.26818301171897,
+   "debit_min": 50.28315406422354,
+   "debit_max": 54.970447989785725,
+   "sortie_mediane": 700.0
+  },
+  "structure": {
+   "debit_mediane": 49.915386986710075,
+   "debit_min": 48.40672258948721,
+   "debit_max": 52.51309101294592,
+   "sortie_mediane": 700.0
+  },
+  "repetitif": {
+   "debit_mediane": 68.0076237632492,
+   "debit_min": 67.8808751323336,
+   "debit_max": 68.02543324551542,
+   "sortie_mediane": 700.0
+  }
+ },
+ "debit_mediane_globale": 52.091784999214525,
+ "mal": 2.974315431967735,
+ "taux_acceptation_pct": 65.8105143989245,
+ "brouillons": 4711.0,
+ "proposes": 14133.0,
+ "acceptes": 9301.0
+}

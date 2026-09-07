@@ -1,0 +1,45 @@
+{
+ "bras": "B1-spec4",
+ "date": "2026-09-07T13:38:52",
+ "repetitions": 2,
+ "rep_prompt": 120,
+ "max_tokens": 300,
+ "par_concurrence": {
+  "1": {
+   "agrege_mediane": 39.083961194648765,
+   "agrege_min": 37.58140030537229,
+   "agrege_max": 40.586522083925246,
+   "par_flux_mediane": 39.083961194648765,
+   "ttft_mediane": 0.9579857587814331,
+   "mal_mediane": 2.762904858299595,
+   "sortie_totale": 300
+  },
+  "2": {
+   "agrege_mediane": 59.83321538463552,
+   "agrege_min": 56.634274827538356,
+   "agrege_max": 63.0321559417327,
+   "par_flux_mediane": 29.91660769231776,
+   "ttft_mediane": 2.156925082206726,
+   "mal_mediane": 2.7255998016160032,
+   "sortie_totale": 600
+  },
+  "3": {
+   "agrege_mediane": 79.10823257586438,
+   "agrege_min": 77.53640974971148,
+   "agrege_max": 80.68005540201727,
+   "par_flux_mediane": 26.369410858621457,
+   "ttft_mediane": 2.5764933824539185,
+   "mal_mediane": 2.702060214744339,
+   "sortie_totale": 900
+  },
+  "4": {
+   "agrege_mediane": 91.60621679934764,
+   "agrege_min": 90.80537217518257,
+   "agrege_max": 92.40706142351272,
+   "par_flux_mediane": 22.90155419983691,
+   "ttft_mediane": 3.7134000062942505,
+   "mal_mediane": 2.7050098411216847,
+   "sortie_totale": 1200
+  }
+ }
+}

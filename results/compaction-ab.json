@@ -1,0 +1,76 @@
+{
+ "depart": 20,
+ "fenetres": [
+  {
+   "nom": "A1 actif",
+   "debit": 52.06,
+   "mal": 3.005,
+   "secondes": 268.6844849586487,
+   "vmstat_A": {
+    "compact_daemon_migrate_scanned": 111211008,
+    "compact_isolated": 359026,
+    "compact_stall": 8,
+    "compact_fail": 8,
+    "compact_success": 0,
+    "pgmigrate_success": 10914
+   },
+   "vmstat_B": {
+    "compact_daemon_migrate_scanned": 49020928,
+    "compact_isolated": 268158,
+    "compact_stall": 0,
+    "compact_fail": 0,
+    "compact_success": 0,
+    "pgmigrate_success": 834
+   },
+   "brut": "prose        44.96 tok/s  [44.13-46.06]  sortie 700\n  code         54.20 tok/s  [54.06-55.26]  sortie 700\n  structure    49.93 tok/s  [49.14-52.36]  sortie 700\n  repetitif    66.84 tok/s  [65.21-68.09]  sortie 700\n\n  débit, médiane des contenus : 52.06 tok/s  [44.96-66.84]\n  MAL  : 3.005   (4661 brouillons, 13983 proposés, 9347 acceptés, taux 66.8 %)\n  JSON : <local>/decode-mal-CMP-A1-actif-20260907-123756.json"
+  },
+  {
+   "nom": "B  neutralisé",
+   "debit": 52.09,
+   "mal": 2.974,
+   "secondes": 268.13922667503357,
+   "vmstat_A": {
+    "compact_daemon_migrate_scanned": 0,
+    "compact_isolated": 0,
+    "compact_stall": 10,
+    "compact_fail": 10,
+    "compact_success": 0,
+    "pgmigrate_success": 0
+   },
+   "vmstat_B": {
+    "compact_daemon_migrate_scanned": 0,
+    "compact_isolated": 0,
+    "compact_stall": 0,
+    "compact_fail": 0,
+    "compact_success": 0,
+    "pgmigrate_success": 0
+   },
+   "brut": "prose        45.38 tok/s  [44.02-46.64]  sortie 700\n  code         54.27 tok/s  [50.28-54.97]  sortie 700\n  structure    49.92 tok/s  [48.41-52.51]  sortie 700\n  repetitif    68.01 tok/s  [67.88-68.03]  sortie 700\n\n  débit, médiane des contenus : 52.09 tok/s  [45.38-68.01]\n  MAL  : 2.974   (4711 brouillons, 14133 proposés, 9301 acceptés, taux 65.8 %)\n  JSON : <local>/decode-mal-CMP-B-zero-20260907-124226.json"
+  },
+  {
+   "nom": "A2 actif (retour)",
+   "debit": 51.02,
+   "mal": 2.949,
+   "secondes": 273.2935745716095,
+   "vmstat_A": {
+    "compact_daemon_migrate_scanned": 108533373,
+    "compact_isolated": 341453,
+    "compact_stall": 0,
+    "compact_fail": 0,
+    "compact_success": 0,
+    "pgmigrate_success": 6986
+   },
+   "vmstat_B": {
+    "compact_daemon_migrate_scanned": 48998400,
+    "compact_isolated": 265145,
+    "compact_stall": 0,
+    "compact_fail": 0,
+    "compact_success": 0,
+    "pgmigrate_success": 883
+   },
+   "brut": "prose        44.99 tok/s  [43.93-45.66]  sortie 700\n  code         52.47 tok/s  [49.54-56.33]  sortie 700\n  structure    49.57 tok/s  [47.29-50.52]  sortie 700\n  repetitif    66.96 tok/s  [65.77-68.65]  sortie 700\n\n  débit, médiane des contenus : 51.02 tok/s  [44.99-66.96]\n  MAL  : 2.949   (4750 brouillons, 14250 proposés, 9258 acceptés, taux 65.0 %)\n  JSON : <local>/decode-mal-CMP-A2-retour-20260907-124701.json"
+  }
+ ],
+ "derive_pct": 1.997694967345369,
+ "effet_pct": 1.067132324408221
+}

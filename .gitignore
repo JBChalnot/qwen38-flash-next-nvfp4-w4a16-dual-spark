@@ -1,0 +1,13 @@
+# Secrets and site overrides — never commit these.
+recipe.env.local
+*.key
+.pins
+
+# The upstream build tree install.sh clones. Not ours, not redistributed.
+upstream/
+
+# Local measurement output. results/ holds only the JSON we publish deliberately.
+results/*.tmp
+__pycache__/
+*.pyc
+upstream-vllm/

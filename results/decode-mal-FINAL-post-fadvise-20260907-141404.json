@@ -1,0 +1,38 @@
+{
+ "bras": "FINAL-post-fadvise",
+ "date": "2026-09-07T14:14:04",
+ "tirs_par_contenu": 4,
+ "max_tokens": 700,
+ "par_contenu": {
+  "prose": {
+   "debit_mediane": 45.872612100726215,
+   "debit_min": 44.73915949443873,
+   "debit_max": 46.421034480654136,
+   "sortie_mediane": 700.0
+  },
+  "code": {
+   "debit_mediane": 52.66508793172227,
+   "debit_min": 50.759421428795065,
+   "debit_max": 57.613135486450055,
+   "sortie_mediane": 700.0
+  },
+  "structure": {
+   "debit_mediane": 49.62320011172449,
+   "debit_min": 47.70353022132197,
+   "debit_max": 51.30057575209881,
+   "sortie_mediane": 700.0
+  },
+  "repetitif": {
+   "debit_mediane": 68.56702432886928,
+   "debit_min": 67.9228875929462,
+   "debit_max": 68.71595184483856,
+   "sortie_mediane": 700.0
+  }
+ },
+ "debit_mediane_globale": 51.14414402172338,
+ "mal": 2.9874254049445863,
+ "taux_acceptation_pct": 66.24751349815288,
+ "brouillons": 4692.0,
+ "proposes": 14076.0,
+ "acceptes": 9325.0
+}

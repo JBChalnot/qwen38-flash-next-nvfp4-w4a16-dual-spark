@@ -1,0 +1,38 @@
+{
+ "bras": "CMP-A2-retour",
+ "date": "2026-09-07T12:47:01",
+ "tirs_par_contenu": 4,
+ "max_tokens": 700,
+ "par_contenu": {
+  "prose": {
+   "debit_mediane": 44.98812186696811,
+   "debit_min": 43.92688019655458,
+   "debit_max": 45.6630800101547,
+   "sortie_mediane": 700.0
+  },
+  "code": {
+   "debit_mediane": 52.46688828597772,
+   "debit_min": 49.540441849544514,
+   "debit_max": 56.32926244270283,
+   "sortie_mediane": 700.0
+  },
+  "structure": {
+   "debit_mediane": 49.57076827772441,
+   "debit_min": 47.28907994567449,
+   "debit_max": 50.52131106429268,
+   "sortie_mediane": 700.0
+  },
+  "repetitif": {
+   "debit_mediane": 66.95995276616782,
+   "debit_min": 65.7679258929525,
+   "debit_max": 68.64972793455146,
+   "sortie_mediane": 700.0
+  }
+ },
+ "debit_mediane_globale": 51.018828281851064,
+ "mal": 2.9490526315789474,
+ "taux_acceptation_pct": 64.96842105263157,
+ "brouillons": 4750.0,
+ "proposes": 14250.0,
+ "acceptes": 9258.0
+}

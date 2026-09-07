@@ -1,0 +1,109 @@
+qwen38-flash-next-nvfp4-w4a16-dual-spark
+Copyright 2026 Jean-Baptiste Chalnot.
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+This repository contains NO model weights and NO redistributed third-party source
+files. It ships configuration, launch scripts, runtime patch scripts and measurement
+tools. The patch scripts modify an installed vLLM tree in place, at container start;
+they do not embed vLLM source. See PROVENANCE.md for the exact upstream revisions the
+patches are written against.
+
+--------------------------------------------------------------------------------
+Software this recipe builds on, and is not part of
+--------------------------------------------------------------------------------
+
+vLLM — https://github.com/vllm-project/vllm
+  Copyright contributors to the vLLM project. Apache License 2.0.
+  Not redistributed here. The scripts under overlay/mods/ and
+  overlay/mods/qsa-kv-fp8/ REWRITE files of an installed vLLM at runtime. They are
+  written against, and only validated at, commit f561eca6c (see PROVENANCE.md).
+  Each patch script refuses to apply if its anchor text is absent, so an unexpected
+  vLLM revision produces a refusal, never a silent partial patch.
+
+eugr/spark-vllm-docker — https://github.com/eugr/spark-vllm-docker
+  Copyright (c) 2026 Eugene Rakhmatulin. MIT License.
+  Not redistributed here, and not forked. install.sh clones it at the pinned commit
+  30f72c8a36e3720d3c8785fa36884eab8196d45c for its two-node launcher (launch-cluster.sh)
+  and copies this repository's overlay/ on top. Its Dockerfile is not used: the engine
+  image is built from vLLM's own docker/Dockerfile (see PROVENANCE.md). The `--apply-mod` and `--launch-script` hooks used by up.sh are that project's
+  own documented extension points.
+
+FlashInfer — https://github.com/flashinfer-ai/flashinfer, Apache License 2.0.
+  Installed by vLLM's own Dockerfile at the pinned commit (flashinfer-python 0.6.17). Not
+  redistributed here.
+
+--------------------------------------------------------------------------------
+Code ported into this repository, with modifications
+--------------------------------------------------------------------------------
+
+overlay/mods/qsa-kv-fp8/run.sh (fp8_e4m3 KV cache on the QSA attention path) has two
+independent, later, public counterparts that reach the same four integration points:
+
+  vllm-project/vllm issue #54426, "[RFC] Qwen3.8-Flash-Next: fp8_e4m3 KV cache on the
+  QSA path — working patch, one machine, looking for corroboration", by Nanetnounou,
+  opened 2026-08-30, measured on a GB10 / sm_121 like ours.
+  vllm-project/vllm PR #54846, "[Model] Qwen4Exp: fp8_e4m3 and nvfp4 KV cache on the
+  QSA path", by andreasgru, opened 2026-09-01. Apache License 2.0.
+
+Our script was written and validated on 2026-08-28 (measurement on the FP8 build, not in
+results/), before either was opened, and without knowledge of them. We became aware of both
+on 2026-09-04 and read them as independent corroboration (pool x1.79 on #54426, x1.889 on
+#54846, against our x1.84). We claim independence, not priority: three people wrote against
+the same six refusals in the same file and reached the same conclusions because the code
+leaves little room for others. No line was copied in any direction. If #54846 merges, this script becomes unnecessary on that engine and should
+be dropped, not maintained. The one earlier vLLM change our script does pattern itself
+on, and says so inline, is PR #47665 (read-time cast that folds to a no-op on bf16
+caches).
+
+--------------------------------------------------------------------------------
+
+overlay/mods/mtp-modelopt-mixed/run.sh implements two fixes first published in:
+
+  Qwen3.8-Flash-Next-NVFP4-DGX-Spark
+  https://github.com/tonyd2wild/Qwen3.8-Flash-Next-NVFP4-DGX-Spark
+  Copyright 2026 Tony DeAngelo (Tech2Wild / 2Wild). Apache License 2.0.
+  (Reproduced verbatim from that repository's NOTICE, as Apache-2.0 §4(d) requires. The
+  same author signs "Kai (Tech2Wild)" in its PROVENANCE.md.)
+  Source file: single-spark-vllm-tp1/patch/upstream-overlays/modelopt.py,
+  lines 1710-1722 (draft-local layer index) and 1780-1796 (FP8_BLOCK_SCALES MoE
+  dispatch), as published 2026-09-05.
+
+  Modifications made here, and why:
+   - reimplemented as an in-place patch script rather than a redistributed overlay
+     file, so that no vLLM source is shipped;
+   - the draft-index parsing uses plain string operations instead of `re`, because
+     the file we patch (vllm/model_executor/layers/quantization/modelopt.py) does not
+     import `re`, and injecting an import would add a failure mode;
+   - added an AST scope check: every name the injected code reads must be assigned in
+     its host function, or the patch refuses.
+
+  The same two fixes were published independently on the same day by sfxnz (MIT) and
+  by MiaAI-Lab (AGPL-3.0). No code from either was used here.
+
+--------------------------------------------------------------------------------
+Model weights — NOT distributed here, and separately licensed
+--------------------------------------------------------------------------------
+
+nvidia/Qwen3.8-Flash-Next-NVFP4
+  https://huggingface.co/nvidia/Qwen3.8-Flash-Next-NVFP4
+  Hugging Face license field: "other" — NVIDIA Open Model License, and the upstream
+  Qwen license below applies to the base model. READ BOTH BEFORE ANY COMMERCIAL USE.
+
+Qwen/Qwen3.8-Flash-Next (base model)
+  https://huggingface.co/Qwen/Qwen3.8-Flash-Next
+  Hugging Face license field: "other" — Qwen Community License 1.0. Permissive
+  including commercial use, with two conditions to check yourself: products above
+  100M MAU / $20M revenue must display the model name, and Model-as-a-Service
+  businesses need a separate license from Qwen.
+
+tools/make-w4a16-variant.py writes a directory of RELATIVE SYMLINKS to a checkpoint
+you downloaded yourself, plus one rewritten config.json. It copies and modifies no
+weight bytes, and this repository redistributes none.
+
+--------------------------------------------------------------------------------
+Attribution for measurements quoted in README.md and REFUSED.md
+--------------------------------------------------------------------------------
+
+Where a number came from someone else's publication, README.md and REFUSED.md say so
+on the line that quotes it. Numbers without such an attribution were measured on the
+hardware described in docs/HARDWARE.md, and their raw JSON is under results/.

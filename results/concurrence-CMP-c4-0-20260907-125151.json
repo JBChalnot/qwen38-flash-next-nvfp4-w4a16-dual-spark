@@ -1,0 +1,45 @@
+{
+ "bras": "CMP-c4-0",
+ "date": "2026-09-07T12:51:51",
+ "repetitions": 2,
+ "rep_prompt": 120,
+ "max_tokens": 300,
+ "par_concurrence": {
+  "1": {
+   "agrege_mediane": 37.13516363487132,
+   "agrege_min": 36.45321604178692,
+   "agrege_max": 37.81711122795571,
+   "par_flux_mediane": 37.13516363487132,
+   "ttft_mediane": 1.5907790660858154,
+   "mal_mediane": 2.576109391124871,
+   "sortie_totale": 300
+  },
+  "2": {
+   "agrege_mediane": 61.26860454630861,
+   "agrege_min": 57.60608311307043,
+   "agrege_max": 64.93112597954678,
+   "par_flux_mediane": 30.634302273154304,
+   "ttft_mediane": 1.9120590090751648,
+   "mal_mediane": 2.505454165869274,
+   "sortie_totale": 600
+  },
+  "3": {
+   "agrege_mediane": 82.59114561932913,
+   "agrege_min": 81.47621278975477,
+   "agrege_max": 83.70607844890348,
+   "par_flux_mediane": 27.53038187310971,
+   "ttft_mediane": 2.1908769607543945,
+   "mal_mediane": 2.4930862492326584,
+   "sortie_totale": 900
+  },
+  "4": {
+   "agrege_mediane": 99.0457846633903,
+   "agrege_min": 98.78208406415715,
+   "agrege_max": 99.30948526262345,
+   "par_flux_mediane": 24.761446165847573,
+   "ttft_mediane": 2.58487731218338,
+   "mal_mediane": 2.507881289308176,
+   "sortie_totale": 1200
+  }
+ }
+}

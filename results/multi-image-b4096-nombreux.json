@@ -1,0 +1,39 @@
+{
+ "bras": "b4096-nombreux",
+ "taille": 768,
+ "res": [
+  {
+   "n": 8,
+   "http": 200,
+   "prompt_tokens": 4718,
+   "juste": 24,
+   "total": 24,
+   "finish": "stop",
+   "secondes": 6.285293817520142
+  },
+  {
+   "n": 10,
+   "http": 200,
+   "prompt_tokens": 5884,
+   "juste": 30,
+   "total": 30,
+   "finish": "stop",
+   "secondes": 8.427854299545288
+  },
+  {
+   "n": 14,
+   "http": 200,
+   "prompt_tokens": 8216,
+   "juste": 42,
+   "total": 42,
+   "finish": "stop",
+   "secondes": 10.880917310714722
+  },
+  {
+   "n": 0,
+   "negatif": true,
+   "juste": 1,
+   "total": 3
+  }
+ ]
+}

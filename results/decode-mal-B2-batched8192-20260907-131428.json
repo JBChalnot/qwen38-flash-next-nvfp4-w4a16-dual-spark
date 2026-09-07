@@ -1,0 +1,38 @@
+{
+ "bras": "B2-batched8192",
+ "date": "2026-09-07T13:14:28",
+ "tirs_par_contenu": 4,
+ "max_tokens": 700,
+ "par_contenu": {
+  "prose": {
+   "debit_mediane": 45.12763087224407,
+   "debit_min": 44.687364466866164,
+   "debit_max": 46.40162498540868,
+   "sortie_mediane": 700.0
+  },
+  "code": {
+   "debit_mediane": 54.93022635805537,
+   "debit_min": 52.24852672165041,
+   "debit_max": 56.27511572766091,
+   "sortie_mediane": 700.0
+  },
+  "structure": {
+   "debit_mediane": 50.92521536327999,
+   "debit_min": 50.27662382640941,
+   "debit_max": 51.98104272384009,
+   "sortie_mediane": 700.0
+  },
+  "repetitif": {
+   "debit_mediane": 68.30686220430817,
+   "debit_min": 68.1829583244399,
+   "debit_max": 68.37826786026282,
+   "sortie_mediane": 700.0
+  }
+ },
+ "debit_mediane_globale": 52.92772086066768,
+ "mal": 2.9993574641250804,
+ "taux_acceptation_pct": 66.64524880416934,
+ "brouillons": 4669.0,
+ "proposes": 14007.0,
+ "acceptes": 9335.0
+}

@@ -1,0 +1,30 @@
+{
+ "bras": "b8192",
+ "taille": 1536,
+ "res": [
+  {
+   "n": 3,
+   "http": 200,
+   "prompt_tokens": 6992,
+   "juste": 9,
+   "total": 9,
+   "finish": "stop",
+   "secondes": 5.5600645542144775
+  },
+  {
+   "n": 14,
+   "http": 200,
+   "prompt_tokens": 32408,
+   "juste": 42,
+   "total": 42,
+   "finish": "stop",
+   "secondes": 20.292876482009888
+  },
+  {
+   "n": 0,
+   "negatif": true,
+   "juste": 0,
+   "total": 3
+  }
+ ]
+}

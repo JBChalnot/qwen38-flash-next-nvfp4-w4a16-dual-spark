@@ -1,0 +1,45 @@
+{
+ "bras": "FINAL-post-fadvise",
+ "date": "2026-09-07T14:16:13",
+ "repetitions": 2,
+ "rep_prompt": 120,
+ "max_tokens": 300,
+ "par_concurrence": {
+  "1": {
+   "agrege_mediane": 36.503232438115916,
+   "agrege_min": 36.28547627248343,
+   "agrege_max": 36.7209886037484,
+   "par_flux_mediane": 36.503232438115916,
+   "ttft_mediane": 1.59394371509552,
+   "mal_mediane": 2.5127824858757064,
+   "sortie_totale": 300
+  },
+  "2": {
+   "agrege_mediane": 58.708824487666476,
+   "agrege_min": 58.21089283634154,
+   "agrege_max": 59.20675613899141,
+   "par_flux_mediane": 29.354412243833238,
+   "ttft_mediane": 2.652696430683136,
+   "mal_mediane": 2.5264165662009788,
+   "sortie_totale": 600
+  },
+  "3": {
+   "agrege_mediane": 84.95440848315644,
+   "agrege_min": 84.82338404862962,
+   "agrege_max": 85.08543291768328,
+   "par_flux_mediane": 28.31813616105215,
+   "ttft_mediane": 2.2957162857055664,
+   "mal_mediane": 2.5168383270911363,
+   "sortie_totale": 900
+  },
+  "4": {
+   "agrege_mediane": 99.4439701338203,
+   "agrege_min": 98.08604973230577,
+   "agrege_max": 100.80189053533485,
+   "par_flux_mediane": 24.860992533455075,
+   "ttft_mediane": 2.984964609146118,
+   "mal_mediane": 2.556406634796465,
+   "sortie_totale": 1200
+  }
+ }
+}
