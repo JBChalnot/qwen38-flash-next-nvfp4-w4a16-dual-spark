@@ -149,9 +149,13 @@ ARGS_KV=()
 # POURQUOI CA COMPTE ICI : la charge mesuree est a **40:1 entree/sortie**, donc
 # le prefill n'est marginal que quand le cache de prefixes absorbe ; sur du contenu froid il
 # pese autant que le decode.
-# ⚠️ MAIS MONTER LE BUDGET SEUL ARME LA FALAISE DE L'INDEXEUR QSA : son transitoire vaut
-# `fp32 [chunk x history]`, soit 2,00 GiB a chunk 2048 et 262 k d'historique, mais **8,00 GiB
-# a chunk 8192** — impossible sur une box ou +1,44 GiB de KV a suffi a OOM-killer le serve.
+# 🔴 RETRACTE : une version precedente de ce commentaire bridait le chunk en invoquant « la
+# falaise de l'indexeur QSA : transitoire fp32 [chunk x history], 8,00 GiB a chunk 8192 ».
+# CETTE FALAISE N'EXISTE PAS DANS CE MOTEUR : `nvidia/ops/qsa.py:14` epingle
+# `_LOGITS_WORKSPACE_BYTES = 128 MiB`, consomme en BORNE DE BOUCLE a `:770`
+# (`rows_per_chunk = _LOGITS_WORKSPACE_BYTES // (columns * 4)`), donc le transitoire est
+# INDEPENDANT du chunk ET du contexte. Le 8-10 GiB decrit ailleurs est le noyau TileLang de
+# SGLang, pas ce chemin. Les deux vraies raisons de `LONG_PREFILL` sont ci-dessous.
 # D'ou LONG_PREFILL : `scheduler.py:563-564` plafonne DUREMENT les jetons par pas d'une
 # requete (`if 0 < seuil < num_new_tokens: num_new_tokens = seuil`), ce qui laisse le budget
 # agrege a 8192 pour BATCHER plusieurs requetes tout en gardant le chunk d'UNE requete

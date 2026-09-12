@@ -168,3 +168,82 @@ No regression: 51.14 tok/s, acceptance 2.987, aggregate 36.5 / 58.7 / 85.0 / 99.
 noise. Run `tools/free-checkpoint-cache.py` on **each** rank after boot (`up.sh` runs it *before*
 boot, which is a different thing).
 
+## 8. Enable the vendor's skinny GEMM (`low_latency_gemm.py`) — **refused, +3.8 %**
+
+The model ships a CuTe-DSL skinny GEMM with *measured* configs for m=1,2,4,8 and PDL, and
+`low_latency_gemm.py:151-155` switches it off on anything that is not sm_103:
+
+```python
+if dtype != torch.bfloat16 or not _is_sm103():
+    return            # sm_121 leaves here; every dense projection falls back to F.linear
+```
+
+Nothing in the kernel forbids it (`cute_dsl/skinny_gemm.py:36-48` only tests that `cutlass.cute`
+imports — it does, CuTe DSL 4.6.2 — and `_use_pdl()` is true from major ≥ 9). It looks like a free
+win. It is not:
+
+| regime | cuBLAS | skinny | gain |
+|---|---|---|---|
+| m=1 | 35.67 ms | 26.49 ms | **1.35×** |
+| m=2 | 28.51 | 26.32 | 1.08× |
+| **m=4 (what runs here)** | **28.29** | **26.44** | **1.07×** |
+| m=8 | 28.40 | 26.38 | 1.08× |
+
+Weighted by the real per-step call counts, and applied to the family that carries 57.2 % of decode
+GPU time (32.86 ms/step), 1.07× is **−2.15 ms ⇒ +3.8 % end to end** — inside the ±4 % inter-boot
+noise here. The gain lives at **m=1** and this deployment runs at m≥2: the draft LM-head call
+measures 2 656.7 µs in production, which is the cuBLAS m≥2 time (2 687–2 709), not m=1 (3 661).
+
+Two of ten shapes — **161 calls/step**, the K=320 hyper-connection and shared-down projections —
+are *refused* outright (`K must be divisible by block_size * vector_width`), so the mod could not
+cover the family even if it paid.
+
+## 9. Restore `cooperative_topk` on sm_121 — **nothing to gain**
+
+`nvidia/ops/qsa.py:788-792` excludes the fast path by name for this GPU family, with no comment
+and no ticket:
+
+```python
+use_cooperative_topk = (... and not current_platform.is_device_capability_family(120))
+```
+
+Both ops are compiled and return the same top-k, so it reads like a bug worth fixing. A kernel
+profile says otherwise: `persistent_topk` costs **1.059 ms out of 1 724 ms of decode GPU time —
+0.06 %**. The whole QSA family (sparse+MQA+indexer+merge+topk+expand) is **1.1 %**; doubling all
+of it would return +0.55 %.
+
+## 10. Port the upstream fused GDN decode kernel — **it is already running**
+
+Two independent reviews reported the fused `fused_gdn_decode_post_conv_mtp` path as missing from
+this engine. It is not. In the live container:
+
+```
+GDN decode kernel: cuda                     # engine echo, both ranks
+hasattr(torch.ops._C, "fused_gdn_decode_post_conv_mtp") -> True
+```
+
+Every guard passes: v/k head ratio 48/16 = 3 ∈ (1,2,3,4,8), `MAX_FUSED_GDN_MTP_TOKENS = 8 > 4`,
+BF16 recurrent state, `has_device_capability(80)`. It costs **0.69 ms/step (1.2 % of decode GPU
+time)**. ⚠️ The fallback is **silent** — `logger.info_once("Falling back to the Triton GDN decode
+path: …")`, buried in a 12-minute boot — so the check is to grep `GDN decode kernel:` in the
+engine echo, not to trust a source reading.
+
+## 11. MTP draft width `K=3` → `K=2` — **the ridge is flat**
+
+The other side of §5. Same config, one variable plus its forced dependencies:
+
+| | K=3 | K=2 |
+|---|---|---|
+| decode, median of 4 contents | 51.14 | **51.10** |
+| mean accepted length | 2.987 | **2.490** |
+| engine step | 58.41 ms | **48.73 ms** |
+
+**+0.08 %.** One draft step costs **+9.68 ms of step** and returns **+0.497 of accepted length** —
+16.6 % against 16.6 %, to the decimal. Bytes and acceptance trade 1:1, which is why K=2, K=3 and
+K=4 all land within noise. Only a change that cuts draft bytes *at constant acceptance* can win.
+
+⚠️ Two forced dependencies, not free variables. `cudagraph_capture_sizes` must be multiples of
+`K+1`, and the KV block size moves with the draft width: **1664 at K=3, 1648 at K=2**, so
+`--prefix-match-unit=128` becomes illegal (the largest power-of-two divisor of 1648 is **16**).
+The first attempt died after 12 minutes on `ValueError: Invalid prefix_match_unit=128 … block
+sizes=[1648, 8, 1648, …]`. Read the block size out of the error, do not assume it.

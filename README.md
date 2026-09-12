@@ -80,6 +80,16 @@ column names its source file.
 | 5 × 296 k-token requests | **OOM-killed** | **5/5 at 200, 699 s, 0 preemptions** | `results/baseline-nvfp4-5x300k.json` |
 | degeneration gate | clean 6/6 | **clean 6/6** | `results/degen-q38-P4-nvfp4-full.txt` |
 | vision probe | — | 42/42 images correct at 8,216 prompt tokens | `results/multi-image-*.json` |
+| cold prefill, 8/16/32/64 k | — | **2 787.8 tok/s** median (2 804.9 / 2 809.8 / 2 770.7 / 2 676.2) | cold proven: `prefix_cache_queries +360 294`, `hits 0` |
+
+**Where the decode time goes**, from a torch profile of 30 pure-decode steps on both ranks:
+decode runs at **73 % of this box's measured 235 GB/s bandwidth wall**, and the dominant kernel
+family — 57.2 % of GPU time, 529 dense BF16 GEMM launches per step — is already at **87 %** of
+it. GPU occupancy is 94.3 % (union of kernel intervals, not a sum of durations). So there is no
+cheap kernel lever left here: everything sits uniformly near the wall, and the bytes that remain
+are the `lm_head`, read **four times per step** — once to verify, once per MTP draft step, over
+the full 248,320-row vocabulary. `REFUSED.md` §8-11 records the four levers measured against
+that profile and refused.
 
 On the long-context row: `running_max = 3` — at most three requests were in flight; KV peaked at
 33.8 % of the pool ≈ 1.20 M tokens resident (above the 889 k of three live requests because
