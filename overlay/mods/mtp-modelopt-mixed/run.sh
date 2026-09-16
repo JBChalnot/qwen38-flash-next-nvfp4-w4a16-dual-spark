@@ -23,7 +23,7 @@
 #   toujours vérifiée par la cible, donc un drafter faux coûte du DÉBIT, jamais de la
 #   correction. C'est mot pour mot notre cicatrice du 2026-08-31 : 30 993 jetons proposés,
 #   **0 accepté**, MAL 1,000, débit 19,4 contre 44,7. ⇒ le contrôle d'un bras MTP est le
-#   **MAL**, jamais le débit.
+#   **MAL**, jamais le débit (règle 12).
 #
 # LE CORRECTIF, ET SON ORIGINE
 #   Porté depuis `tonyd2wild/Qwen3.8-Flash-Next-NVFP4-DGX-Spark`,
@@ -37,7 +37,7 @@
 #
 # POURQUOI CE MOD EST INERTE PAR CONSTRUCTION, SANS DRAPEAU
 #   Il ne touche que `quantization/modelopt.py`. Notre serve de production charge
-#   le checkpoint FP8 (`Qwen3.8-Flash-Next-FP8`), dont le `quantization_config.quant_method` vaut `FP8` ⇒ le chemin élu est
+#   `q38-fp8tail`, dont le `quantization_config.quant_method` vaut `FP8` ⇒ le chemin élu est
 #   `quantization/fp8.py`, jamais modelopt. Aucun drapeau n'est donc nécessaire : le code
 #   ajouté n'est atteignable que par un checkpoint `MIXED_PRECISION`. C'est un fait de
 #   dispatch, pas une intention — et c'est ce qui le rend vérifiable.
@@ -111,6 +111,11 @@ t = subn_exig(
     t, 1, "B3 candidats de prefixe")
 
 # ── B2 : router FP8_BLOCK_SCALES vers la methode MoE FP8 par blocs de vLLM.
+#    ⚠️ 2026-09-16 : NVIDIA a renomme le quant_algo du drafter dans config.json (commit HF fc694b54,
+#    « Fix MTP serving metadata », poids inchanges, meme taille de shard) : FP8_BLOCK_SCALES -> FP8_PB_WO.
+#    vLLM connait FP8_PB_WO pour un LinearBase (ModelOptFp8PbWoLinearMethod) mais TOUJOURS PAS pour un
+#    RoutedExperts (return None = experts du drafter non quantifies, MAL 1,000 en silence). Meme tenseurs
+#    (weight_scale_inv blocs 128x128) => meme branche. Notre snapshot local porte encore l ancien nom.
 #    Ancre : la branche W4A16_NVFP4 du bloc `RoutedExperts` — unique dans le fichier.
 ANCRE_B2 = (
     r"            if quant_algo == \"W4A16_NVFP4\":\n"
@@ -126,7 +131,7 @@ t = subn_exig(
     "                    quant_config=self.w4a16_nvfp4_config,\n"
     "                    moe_config=layer.moe_config,\n"
     "                )\n"
-    f"            if quant_algo in (\"FP8_BLOCK_SCALES\", \"FP8_BLOCK\"):\n"
+    f"            if quant_algo in (\"FP8_BLOCK_SCALES\", \"FP8_BLOCK\", \"FP8_PB_WO\"):\n"
     f"                # {mark} B2 : les experts routes du MTP sont du FP8 a echelles de\n"
     "                # bloc 128x128 (weight_scale_inv). Le dispatch mixte n'avait aucune\n"
     "                # branche et retombait sur `return None` = non quantifie, en silence.\n"
@@ -150,7 +155,7 @@ t = subn_exig(
     "                )\n",
     t, 1, "B2 branche FP8_BLOCK_SCALES")
 
-# ── controle de PORTEE : `ast.parse` valide la syntaxe, jamais les noms.
+# ── controle de PORTEE : `ast.parse` valide la syntaxe, jamais les noms (regle 41).
 #    Chaque nom lu par le code injecte doit etre assigne dans SA fonction hote.
 arbre = ast.parse(t)
 

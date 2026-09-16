@@ -128,6 +128,8 @@ both, `ple_layer.py` returns `None` under the mixed-precision config (the siblin
 **3. `mods/mtp-modelopt-mixed`.** Without it, speculation is **silently dead**: the draft layer
 index is local in the checkpoint (`mtp.layers.0`) while vLLM builds `mtp.layers.48`, and
 `FP8_BLOCK_SCALES` is not in vLLM's modelopt dispatch, so routed experts fall through to
+
+> **2026-09-16:** NVIDIA renamed the drafter's `quant_algo` on HF `main` (commit `fc694b54`, "Fix MTP serving metadata", weights unchanged): `FP8_BLOCK_SCALES` → `FP8_PB_WO`. vLLM knows `FP8_PB_WO` for `LinearBase` but still not for `RoutedExperts`, so the same silent fallthrough applies. The mod now routes both names. `install.sh` pins the earlier revision; if you download `main`, you get the new name and the mod still covers it.
 unquantized with no error. Symptom: 200s, correct answers, zero accepted drafts — mean accepted
 length 1.000 instead of 2.99, about 19 tok/s instead of 50. Ported from
 [Tech2Wild](https://github.com/tonyd2wild/Qwen3.8-Flash-Next-NVFP4-DGX-Spark) (Apache-2.0).

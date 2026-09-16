@@ -103,7 +103,7 @@ def main() -> int:
     for algo, ks in sorted(apres.items()):
         print(f"    {algo:<20} {len(ks):>3} entrées")
 
-    intacts = {"FP8", "FP8_BLOCK_SCALES"}
+    intacts = {"FP8", "FP8_BLOCK_SCALES", "FP8_PB_WO"}
     for algo in intacts:
         if len(avant.get(algo, [])) != len(apres.get(algo, [])):
             sys.exit(f"FAIL CLOSED : {algo} a changé de compte — effet de bord interdit")
